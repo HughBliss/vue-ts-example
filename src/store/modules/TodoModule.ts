@@ -1,5 +1,6 @@
 import { ToDo } from '@/models/ToDo'
 import { Actions, createMapper, Getters, Module, Mutations } from 'vuex-smart-module'
+import { TodosRepository } from '@/repositories/TodosRepository'
 
 export class TodoState {
   todos: Array<ToDo> = []
@@ -23,12 +24,8 @@ export class TodoMutations extends Mutations<TodoState> {
 
 export class TodoActions extends Actions<TodoState, TodoGetters, TodoMutations, TodoActions> {
   async fetchTodos (): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.commit('SET_TODOS', [new ToDo('to do smth', false)])
-        resolve()
-      }, 1000)
-    })
+    const todos = await TodosRepository.fetchTodos()
+    this.commit('SET_TODOS', todos)
   }
 }
 
