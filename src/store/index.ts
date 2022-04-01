@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { usersModule } from '@/store/modules/UsersModule'
 import { createStore, Module } from 'vuex-smart-module'
+import TodoModule from '@/store/modules/TodoModule'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,11 @@ Vue.use(Vuex)
 //   }
 // })
 
-const rootModule = new Module({ modules: { usersModule } })
+const rootModule = new Module({
+  modules: {
+    usersModule,
+    TodoModule
+  }
+})
 
 export default createStore(rootModule)
