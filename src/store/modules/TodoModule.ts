@@ -1,6 +1,7 @@
 import { ToDo } from '@/models/ToDo'
+import { ITodoRepository } from '@/repositories/TodoRepository/ITodoRepository'
+import { Inject } from 'inversify-props'
 import { Actions, createMapper, Getters, Module, Mutations } from 'vuex-smart-module'
-import { TodosRepository } from '@/repositories/TodosRepository'
 
 export class TodoState {
   todos: Array<ToDo> = []
@@ -17,14 +18,17 @@ export class TodoGetters extends Getters<TodoState> {
 }
 
 export class TodoMutations extends Mutations<TodoState> {
-  SET_TODOS (arr: Array<ToDo>) {
+  SET_TODOS (arr: Array<ToDo>): void {
     this.state.todos = arr
   }
 }
 
 export class TodoActions extends Actions<TodoState, TodoGetters, TodoMutations, TodoActions> {
+  @Inject()
+  private todosRepository !: ITodoRepository
+
   async fetchTodos (): Promise<void> {
-    const todos = await TodosRepository.fetchTodos()
+    const todos = await this.todosRepository.fetchTodos()
     this.commit('SET_TODOS', todos)
   }
 }
