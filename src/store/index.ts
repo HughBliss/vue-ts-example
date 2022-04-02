@@ -1,16 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { usersModule } from '@/store/modules/UsersModule'
-import { createStore, Module } from 'vuex-smart-module'
 import TodoModule from '@/store/modules/TodoModule'
+import { usersModule } from '@/store/modules/UsersModule'
+import Vue from 'vue'
+import Vuex, { Store } from 'vuex'
+import { createStore, Module } from 'vuex-smart-module'
+import { JsModuleExample } from './modules/JsModuleExample/JsModuleExample'
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IRootState { }
 
 Vue.use(Vuex)
-
-// export default new Vuex.Store({
-//   modules: {
-//     usersModule: createStore(usersModule)
-//   }
-// })
 
 const rootModule = new Module({
   modules: {
@@ -19,4 +17,8 @@ const rootModule = new Module({
   }
 })
 
-export default createStore(rootModule)
+const nativeRoot: Store<IRootState> = createStore(rootModule)
+
+nativeRoot.registerModule('JsModuleExample', JsModuleExample)
+
+export default nativeRoot

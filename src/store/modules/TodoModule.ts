@@ -1,7 +1,13 @@
 import { ToDo } from '@/models/ToDo'
 import { ITodoRepository } from '@/repositories/TodoRepository/ITodoRepository'
 import { Inject } from 'inversify-props'
-import { Actions, createMapper, Getters, Module, Mutations } from 'vuex-smart-module'
+import {
+  Actions,
+  createMapper,
+  Getters,
+  Module,
+  Mutations
+} from 'vuex-smart-module'
 
 export class TodoState {
   todos: Array<ToDo> = []
@@ -23,7 +29,12 @@ export class TodoMutations extends Mutations<TodoState> {
   }
 }
 
-export class TodoActions extends Actions<TodoState, TodoGetters, TodoMutations, TodoActions> {
+export class TodoActions extends Actions<
+  TodoState,
+  TodoGetters,
+  TodoMutations,
+  TodoActions
+> {
   @Inject()
   private todosRepository !: ITodoRepository
 
